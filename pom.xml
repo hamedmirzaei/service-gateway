@@ -15,8 +15,18 @@
     <description>Navaco Service Gateway</description>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
     </properties>
+
+    <modules>
+        <module>account-service</module>
+        <module>camel-service-gateway</module>
+        <module>config-server</module>
+        <module>eureka-server</module>
+        <module>soap-webservice</module>
+    </modules>
 
     <dependencies>
         <dependency>
