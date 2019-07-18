@@ -13,6 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>service-gateway</name>
     <description>Navaco Service Gateway</description>
+    <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
