@@ -1,15 +1,13 @@
 package com.navaco.service.gateway.config;
 
-import com.google.gson.Gson;
 import com.navaco.service.gateway.model.Request;
+import com.navaco.service.gateway.processor.AddRequestHeadersProcessor;
 import com.navaco.service.gateway.processor.RemoveHeaderProcessor;
 import com.navaco.service.gateway.service.Greeting;
 import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.http.common.HttpMethods;
 import org.apache.camel.model.rest.RestBindingMode;
-import org.apache.camel.model.rest.RestParamType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,13 +21,13 @@ public class RequestDispatcherRoute extends RouteBuilder {
     @Value("${rest.port}")
     private String port;
 
-    private Gson gson;
     private RemoveHeaderProcessor removeHeaderProcessor;
+    private AddRequestHeadersProcessor addRequestHeadersProcessor;
 
     @PostConstruct
     public void post() {
-        gson = new Gson();
         removeHeaderProcessor = new RemoveHeaderProcessor();
+        addRequestHeadersProcessor = new AddRequestHeadersProcessor();
     }
 
     @Override
@@ -44,19 +42,11 @@ public class RequestDispatcherRoute extends RouteBuilder {
 
         rest("/dispatcher")
                 .post()
-                .description("Say hello to person/thing").outType(Greeting.class)
-                .param().name("name").type(RestParamType.path).description("Person/Thing name").dataType("string").endParam()
+                .description("Make a request").outType(Greeting.class)
                 .consumes("application/json").type(Request.class)
                 .route()
                 .log("############## Request is: ${body}")
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        Request request = gson.fromJson(exchange.getIn().getBody(String.class), Request.class);
-                        exchange.getIn().setHeader("requestType", request.getRequestType());
-                        exchange.getIn().setHeader("actionType", request.getActionType());
-                    }
-                })
+                .process(addRequestHeadersProcessor)
                 .threads(5)
                 .choice()
                     .when(simple("${header.requestType} == 'ACCOUNT'"))
@@ -67,11 +57,12 @@ public class RequestDispatcherRoute extends RouteBuilder {
                                 .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.GET))
                                 .serviceCall(ACCOUNT_EUREKA_SERVICE_NAME + "/accounts/1")
                             .otherwise()
-                                .log("############## Account Unknown Action")
+                                .log("############## Account Another Unimplemented Action")
                         .endChoice()
                     .otherwise()
-                        .log("############## Unknown Request")
+                        .log("############## Another Unimplemented Request")
                 .endChoice()
                 .endRest();
     }
+
 }
