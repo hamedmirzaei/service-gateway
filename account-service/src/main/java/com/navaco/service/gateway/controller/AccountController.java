@@ -3,10 +3,7 @@ package com.navaco.service.gateway.controller;
 import com.navaco.service.gateway.model.Account;
 import com.navaco.service.gateway.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +26,11 @@ public class AccountController {
     @GetMapping("/{id}")
     public Account getAccount(@PathVariable(value = "id") Long accountId) {
         return accountService.getAccount(accountId);
+    }
+
+    @PostMapping
+    public Account addAccount(@RequestBody Account account) {
+        return accountService.addAccount(account);
     }
 
 }
