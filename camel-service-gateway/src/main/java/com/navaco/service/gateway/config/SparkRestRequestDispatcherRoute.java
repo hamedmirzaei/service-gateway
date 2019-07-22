@@ -41,7 +41,7 @@ public class SparkRestRequestDispatcherRoute extends RouteBuilder {
         // for each single micro-service which expose a rest API
         for (ContextServiceMapping contextServiceMapping : contextServiceMappings) {
             // redirect Http.GET requests to appropriate micro-service
-            from("spark-rest:get:accounts")
+            from("spark-rest:get:" + contextServiceMapping.getContext())
                 .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.GET))
                 .setHeader("in_uri", simple("${header[CamelHttpUri]}"))
                 .removeHeader("CamelHttp*")
