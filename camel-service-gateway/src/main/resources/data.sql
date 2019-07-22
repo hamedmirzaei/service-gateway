@@ -1,0 +1,1 @@
+INSERT INTO CONTEXT_SERVICE_MAPPING (CSM_ID, CONTEXT, SERVICE) VALUES (1, 'accounts', 'account-service');

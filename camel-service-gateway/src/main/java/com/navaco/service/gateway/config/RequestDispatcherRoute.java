@@ -9,11 +9,11 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.http.common.HttpMethods;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-@Configuration
+@Component
 public class RequestDispatcherRoute extends RouteBuilder {
 
     private final String ACCOUNT_EUREKA_SERVICE_NAME = "account-service";
@@ -32,13 +32,8 @@ public class RequestDispatcherRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        restConfiguration()
-                .host("localhost")
-                .port(port)
-                .bindingMode(RestBindingMode.json)
-                .apiProperty("api.title", "Dispatcher Camel API")
-                .apiProperty("api.version", "1.0")
-                .apiProperty("cors", "true");
+
+        setupRestConfiguration();
 
         rest("/dispatcher")
                 .post()
@@ -49,20 +44,30 @@ public class RequestDispatcherRoute extends RouteBuilder {
                 .process(addRequestHeadersProcessor)
                 .threads(5)
                 .choice()
-                    .when(simple("${header.requestType} == 'ACCOUNT'"))
-                        .loadBalance().roundRobin()
-                        .choice()
-                            .when(simple("${header.actionType} == 'GET'"))
-                                .process(removeHeaderProcessor)
-                                .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.GET))
-                                .serviceCall(ACCOUNT_EUREKA_SERVICE_NAME + "/accounts/1")
-                            .otherwise()
-                                .log("############## Account Another Unimplemented Action")
-                        .endChoice()
-                    .otherwise()
-                        .log("############## Another Unimplemented Request")
+                .when(simple("${header.requestType} == 'ACCOUNT'"))
+                .loadBalance().roundRobin()
+                .choice()
+                .when(simple("${header.actionType} == 'GET'"))
+                .process(removeHeaderProcessor)
+                .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.GET))
+                .serviceCall(ACCOUNT_EUREKA_SERVICE_NAME + "/accounts/1")
+                .otherwise()
+                .log("############## Account Another Unimplemented Action")
+                .endChoice()
+                .otherwise()
+                .log("############## Another Unimplemented Request")
                 .endChoice()
                 .endRest();
+    }
+
+    private void setupRestConfiguration() {
+        restConfiguration()
+                .host("localhost")
+                .port(port)
+                .bindingMode(RestBindingMode.json)
+                .apiProperty("api.title", "Dispatcher Camel API")
+                .apiProperty("api.version", "1.0")
+                .apiProperty("cors", "true");
     }
 
 }
