@@ -26,13 +26,6 @@ public class SparkRestRequestDispatcherRoute extends RouteBuilder {
     @Value("${rest.port}")
     private String port;
 
-    private RemoveHeaderProcessor removeHeaderProcessor;
-
-    @PostConstruct
-    public void post() {
-        removeHeaderProcessor = new RemoveHeaderProcessor();
-    }
-
     @Autowired
     public SparkRestRequestDispatcherRoute(ContextServiceMappingService contextServiceMappingService) {
         this.contextServiceMappingService = contextServiceMappingService;
@@ -51,14 +44,12 @@ public class SparkRestRequestDispatcherRoute extends RouteBuilder {
         for (ContextServiceMapping contextServiceMapping : contextServiceMappings) {
             from("spark-rest:get:accounts")
                 .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.GET))
-                .process(new Processor() {
-                    @Override
-                    public void process(Exchange exchange) throws Exception {
-                        String uri = exchange.getIn().getHeaders().get("CamelHttpUri").toString();
-                    }
-                })
-                .log("############## URI: ${header.CamelHttpUri}")
-                .serviceCall(contextServiceMapping.getService());
+                .setHeader("in_uri", simple("${header[CamelHttpUri]}"))
+                .removeHeader("CamelHttp*")
+                .removeHeader(Exchange.HTTP_PATH)
+                .removeHeader(Exchange.HTTP_URI)
+                .serviceCall(contextServiceMapping.getService() + "/" + "${header[in_uri]}")
+                .convertBodyTo(String.class);
 
             from("spark-rest:post:" + contextServiceMapping.getContext())
                     .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.POST))
