@@ -28,23 +28,28 @@ public class SparkRestRequestDispatcherRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
+        // rest configuration
         setupRestConfiguration();
 
+        // mapping of context strings to eureka service names
         List<ContextServiceMapping> contextServiceMappings = contextServiceMappingService.getAllContextServiceMapping();
 
+        // for health check
         from("spark-rest:get:health")
                 .transform().constant("Service is Up");
 
+        // for each single micro-service which expose a rest API
         for (ContextServiceMapping contextServiceMapping : contextServiceMappings) {
+            // redirect Http.GET requests to appropriate micro-service
             from("spark-rest:get:accounts")
                 .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.GET))
                 .setHeader("in_uri", simple("${header[CamelHttpUri]}"))
                 .removeHeader("CamelHttp*")
                 .removeHeader(Exchange.HTTP_PATH)
                 .removeHeader(Exchange.HTTP_URI)
-                .serviceCall(contextServiceMapping.getService() + "/" + "${header[in_uri]}")
-                .convertBodyTo(String.class);
+                .serviceCall(contextServiceMapping.getService() + "/" + "${header[in_uri]}");
 
+            // redirect Http.POST requests to appropriate micro-service
             from("spark-rest:post:" + contextServiceMapping.getContext())
                 .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.POST))
                 .setHeader("in_uri", simple("${header[CamelHttpUri]}"))
@@ -53,17 +58,32 @@ public class SparkRestRequestDispatcherRoute extends RouteBuilder {
                 .removeHeader(Exchange.HTTP_URI)
                 .serviceCall(contextServiceMapping.getService() + "/" + "${header[in_uri]}");
 
+            // redirect Http.DELETE requests to appropriate micro-service
             from("spark-rest:delete:" + contextServiceMapping.getContext())
-                    .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.DELETE))
-                    .serviceCall(contextServiceMapping.getService());
+                .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.DELETE))
+                .setHeader("in_uri", simple("${header[CamelHttpUri]}"))
+                .removeHeader("CamelHttp*")
+                .removeHeader(Exchange.HTTP_PATH)
+                .removeHeader(Exchange.HTTP_URI)
+                .serviceCall(contextServiceMapping.getService() + "/" + "${header[in_uri]}");
 
+            // redirect Http.PUT requests to appropriate micro-service
             from("spark-rest:put:" + contextServiceMapping.getContext())
-                    .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.PUT))
-                    .serviceCall(contextServiceMapping.getService());
+                .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.PUT))
+                .setHeader("in_uri", simple("${header[CamelHttpUri]}"))
+                .removeHeader("CamelHttp*")
+                .removeHeader(Exchange.HTTP_PATH)
+                .removeHeader(Exchange.HTTP_URI)
+                .serviceCall(contextServiceMapping.getService() + "/" + "${header[in_uri]}");
 
+            // redirect Http.PATCH requests to appropriate micro-service
             from("spark-rest:patch:" + contextServiceMapping.getContext())
-                    .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.PATCH))
-                    .serviceCall(contextServiceMapping.getService());
+                .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.PATCH))
+                .setHeader("in_uri", simple("${header[CamelHttpUri]}"))
+                .removeHeader("CamelHttp*")
+                .removeHeader(Exchange.HTTP_PATH)
+                .removeHeader(Exchange.HTTP_URI)
+                .serviceCall(contextServiceMapping.getService() + "/" + "${header[in_uri]}");
         }
     }
 
