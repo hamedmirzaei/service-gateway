@@ -36,7 +36,7 @@ public class RequestDispatcherRoute extends RouteBuilder {
         setupRestConfiguration();
 
         rest("/dispatcher")
-                .post()
+            .post()
                 .description("Make a request").outType(Greeting.class)
                 .consumes("application/json").type(Request.class)
                 .route()
@@ -44,20 +44,20 @@ public class RequestDispatcherRoute extends RouteBuilder {
                 .process(addRequestHeadersProcessor)
                 .threads(5)
                 .choice()
-                .when(simple("${header.requestType} == 'ACCOUNT'"))
-                .loadBalance().roundRobin()
-                .choice()
-                .when(simple("${header.actionType} == 'GET'"))
-                .process(removeHeaderProcessor)
-                .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.GET))
-                .serviceCall(ACCOUNT_EUREKA_SERVICE_NAME + "/accounts/1")
-                .otherwise()
-                .log("############## Account Another Unimplemented Action")
+                    .when(simple("${header.requestType} == 'ACCOUNT'"))
+                        .loadBalance().roundRobin()
+                        .choice()
+                            .when(simple("${header.actionType} == 'GET'"))
+                                .process(removeHeaderProcessor)
+                                .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.GET))
+                                .serviceCall(ACCOUNT_EUREKA_SERVICE_NAME + "/accounts/1")
+                            .otherwise()
+                                .log("############## Account Another Unimplemented Action")
+                        .endChoice()
+                    .otherwise()
+                        .log("############## Another Unimplemented Request")
                 .endChoice()
-                .otherwise()
-                .log("############## Another Unimplemented Request")
-                .endChoice()
-                .endRest();
+            .endRest();
     }
 
     private void setupRestConfiguration() {

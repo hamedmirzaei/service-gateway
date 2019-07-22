@@ -12,10 +12,10 @@ public class ContextServiceMapping implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "CONTEXT")
+    @Column(name = "CONTEXT", unique = true, nullable = false)
     private String context;
 
-    @Column(name = "SERVICE")
+    @Column(name = "SERVICE", nullable = false)
     private String service;
 
     public ContextServiceMapping() {
