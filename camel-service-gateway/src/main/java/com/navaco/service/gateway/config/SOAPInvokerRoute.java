@@ -18,10 +18,14 @@ public class SOAPInvokerRoute extends RouteBuilder {
 
         String operationName1 = "sayHello";
         String operationName2 = "sayBye";
+        String operationName3 = "getCustomer";
         String namespace = "http://service.gateway.service.navaco.com/";
         String serviceURL = "http://localhost:8094/services/GreetingService";
+        String serviceURL2 = "http://localhost:8094/services/CustomerService";
         String serviceClass = "com.navaco.service.gateway.service.GreetingService";
+        String serviceClass2 = "com.navaco.service.gateway.service.CustomerService";
         String serviceWSDL = "/wsdl/GreetingService.wsdl";
+        String serviceWSDL2 = "/wsdl/CustomerService.wsdl";
 
         setupRestConfiguration();
 
@@ -38,6 +42,13 @@ public class SOAPInvokerRoute extends RouteBuilder {
             .setHeader(CxfConstants.OPERATION_NAMESPACE, simple(namespace))
             .toD("cxf://" + serviceURL + "?serviceClass=" + serviceClass + "&wsdlURL=" + serviceWSDL)
             .marshal().json(JsonLibrary.Jackson);
+
+        from("spark-rest:get:/soap/customers/:id")
+                .setBody(simple("${header.id}"))
+                .setHeader(CxfConstants.OPERATION_NAME, simple(operationName3))
+                .setHeader(CxfConstants.OPERATION_NAMESPACE, simple(namespace))
+                .toD("cxf://" + serviceURL2 + "?serviceClass=" + serviceClass2 + "&wsdlURL=" + serviceWSDL2)
+                .marshal().json(JsonLibrary.Jackson);
     }
 
     private void setupRestConfiguration() {

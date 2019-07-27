@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.gateway.service.navaco.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="CustomerServiceImplService" targetNamespace="http://service.gateway.service.navaco.com/">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.gateway.service.navaco.com/" elementFormDefault="unqualified" targetNamespace="http://service.gateway.service.navaco.com/" version="1.0">
+            <xs:element name="Account" type="tns:account"/>
+            <xs:element name="Customer" type="tns:customer"/>
+            <xs:element name="getCustomer" type="tns:getCustomer"/>
+            <xs:element name="getCustomerResponse" type="tns:getCustomerResponse"/>
+            <xs:complexType name="getCustomer">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="CustomerId" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getCustomerResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="Customer" type="tns:customer"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="customer">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="customerId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="name" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="accounts" nillable="true" type="tns:account"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="account">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="accountId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="accountNumber" type="xs:string"/>
+                    <xs:element minOccurs="0" name="balance" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getCustomerResponse">
+        <wsdl:part element="tns:getCustomerResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCustomer">
+        <wsdl:part element="tns:getCustomer" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="CustomerService">
+        <wsdl:operation name="getCustomer">
+            <wsdl:input message="tns:getCustomer" name="getCustomer"> </wsdl:input>
+            <wsdl:output message="tns:getCustomerResponse" name="getCustomerResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CustomerServiceImplServiceSoapBinding" type="tns:CustomerService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getCustomer">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getCustomer">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCustomerResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CustomerServiceImplService">
+        <wsdl:port binding="tns:CustomerServiceImplServiceSoapBinding" name="CustomerServiceImplPort">
+            <soap:address location="http://localhost:8094/services/CustomerService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

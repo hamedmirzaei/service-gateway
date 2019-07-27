@@ -84,6 +84,8 @@ public class SparkRestRequestDispatcherRoute extends RouteBuilder {
                 .removeHeader(Exchange.HTTP_PATH)
                 .removeHeader(Exchange.HTTP_URI)
                 .serviceCall(contextServiceMapping.getService() + "/" + "${header[in_uri]}");
+
+            // TODO Other Http Methods can go here
         }
     }
 
