@@ -1,20 +1,16 @@
 package com.navaco.service.gateway.config;
 
-import com.navaco.service.gateway.service.InfoServiceImpl;
 import com.navaco.service.gateway.service.interceptors.AppInboundInterceptor;
 import com.navaco.service.gateway.service.interceptors.AppOutboundInterceptor;
 import org.apache.cxf.Bus;
 import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.ext.logging.LoggingFeature;
-import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletPath;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-
-import javax.xml.ws.Endpoint;
 
 @Configuration
 public class CXFConfig {
@@ -31,14 +27,6 @@ public class CXFConfig {
         springBus.getOutInterceptors().add(new AppOutboundInterceptor());
         springBus.getFeatures().add(loggingFeature);
         return springBus;
-    }
-
-    @Bean
-    public Endpoint endpoint(LoggingFeature loggingFeature) {
-        EndpointImpl endpoint = new EndpointImpl(springBus(loggingFeature), new InfoServiceImpl());
-        endpoint.getFeatures().add(new LoggingFeature());
-        endpoint.publish("/InfoService");
-        return endpoint;
     }
 
     @Bean

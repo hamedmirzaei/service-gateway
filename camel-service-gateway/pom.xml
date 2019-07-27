@@ -131,8 +131,7 @@
                         <configuration>
                             <wsdlOptions>
                                 <wsdlOption>
-                                    <wsdl>src/main/resources/wsdl/GreetingService.wsdl</wsdl>
-                                    <wsdl>src/main/resources/wsdl/InfoService.wsdl</wsdl>
+                                    <wsdl>src/main/resources/wsdl/CustomerService.wsdl</wsdl>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>
