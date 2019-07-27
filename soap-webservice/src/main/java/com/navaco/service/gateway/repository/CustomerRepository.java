@@ -41,4 +41,14 @@ public class CustomerRepository {
     public List<Customer> getAllCustomers() {
         return customers;
     }
+
+    public Account getAccountOfCustomer(Long customerId, Long accountId) {
+        for (Customer customer : customers) {
+            if (customerId.equals(customer.getCustomerId()))
+                for (Account account : customer.getAccounts())
+                    if (accountId.equals(account.getAccountId()))
+                        return account;
+        }
+        return new Account(0l, "0", 0l);
+    }
 }

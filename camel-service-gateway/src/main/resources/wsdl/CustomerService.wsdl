@@ -6,6 +6,8 @@
             <xs:element name="Customer" type="tns:customer"/>
             <xs:element name="addCustomer" type="tns:addCustomer"/>
             <xs:element name="addCustomerResponse" type="tns:addCustomerResponse"/>
+            <xs:element name="getAccountOfCustomer" type="tns:getAccountOfCustomer"/>
+            <xs:element name="getAccountOfCustomerResponse" type="tns:getAccountOfCustomerResponse"/>
             <xs:element name="getAllCustomers" type="tns:getAllCustomers"/>
             <xs:element name="getAllCustomersResponse" type="tns:getAllCustomersResponse"/>
             <xs:element name="getCustomer" type="tns:getCustomer"/>
@@ -52,6 +54,17 @@
                     <xs:element minOccurs="0" name="Customer" type="tns:customer"/>
                 </xs:sequence>
             </xs:complexType>
+            <xs:complexType name="getAccountOfCustomer">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="CustomerId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="AccountId" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getAccountOfCustomerResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="Account" type="tns:account"/>
+                </xs:sequence>
+            </xs:complexType>
         </xs:schema>
     </wsdl:types>
     <wsdl:message name="getAllCustomers">
@@ -72,6 +85,12 @@
     <wsdl:message name="getCustomer">
         <wsdl:part element="tns:getCustomer" name="parameters"> </wsdl:part>
     </wsdl:message>
+    <wsdl:message name="getAccountOfCustomerResponse">
+        <wsdl:part element="tns:getAccountOfCustomerResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getAccountOfCustomer">
+        <wsdl:part element="tns:getAccountOfCustomer" name="parameters"> </wsdl:part>
+    </wsdl:message>
     <wsdl:portType name="CustomerService">
         <wsdl:operation name="getAllCustomers">
             <wsdl:input message="tns:getAllCustomers" name="getAllCustomers"> </wsdl:input>
@@ -84,6 +103,10 @@
         <wsdl:operation name="getCustomer">
             <wsdl:input message="tns:getCustomer" name="getCustomer"> </wsdl:input>
             <wsdl:output message="tns:getCustomerResponse" name="getCustomerResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getAccountOfCustomer">
+            <wsdl:input message="tns:getAccountOfCustomer" name="getAccountOfCustomer"> </wsdl:input>
+            <wsdl:output message="tns:getAccountOfCustomerResponse" name="getAccountOfCustomerResponse"> </wsdl:output>
         </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="CustomerServiceImplServiceSoapBinding" type="tns:CustomerService">
@@ -112,6 +135,15 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="getCustomerResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getAccountOfCustomer">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getAccountOfCustomer">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getAccountOfCustomerResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>

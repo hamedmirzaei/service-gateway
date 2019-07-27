@@ -1,5 +1,6 @@
 package com.navaco.service.gateway.service;
 
+import com.navaco.service.gateway.model.Account;
 import com.navaco.service.gateway.model.Customer;
 
 import javax.jws.WebMethod;
@@ -18,6 +19,10 @@ public interface CustomerService {
     @WebMethod()
     @WebResult(name = "Customers")
     public List<Customer> getAllCustomers();
+
+    @WebMethod()
+    @WebResult(name = "Account")
+    public Account getAccountOfCustomer(@WebParam(name = "CustomerId") String customerId, @WebParam(name = "AccountId") String accountId);
 
     @WebMethod()
     @WebResult(name = "Customer")
