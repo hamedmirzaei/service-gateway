@@ -5,6 +5,8 @@ import com.navaco.service.gateway.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
@@ -18,5 +20,15 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer getCustomer(String customerId) {
         return customerRepository.getCustomer(Long.parseLong(customerId));
+    }
+
+    @Override
+    public List<Customer> getAllCustomers() {
+        return customerRepository.getAllCustomers();
+    }
+
+    @Override
+    public Customer addCustomer(Customer customer) {
+        return customerRepository.addCustomer(customer);
     }
 }

@@ -4,16 +4,18 @@
         <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.gateway.service.navaco.com/" elementFormDefault="unqualified" targetNamespace="http://service.gateway.service.navaco.com/" version="1.0">
             <xs:element name="Account" type="tns:account"/>
             <xs:element name="Customer" type="tns:customer"/>
+            <xs:element name="addCustomer" type="tns:addCustomer"/>
+            <xs:element name="addCustomerResponse" type="tns:addCustomerResponse"/>
+            <xs:element name="getAllCustomers" type="tns:getAllCustomers"/>
+            <xs:element name="getAllCustomersResponse" type="tns:getAllCustomersResponse"/>
             <xs:element name="getCustomer" type="tns:getCustomer"/>
             <xs:element name="getCustomerResponse" type="tns:getCustomerResponse"/>
-            <xs:complexType name="getCustomer">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="CustomerId" type="xs:string"/>
-                </xs:sequence>
+            <xs:complexType name="getAllCustomers">
+                <xs:sequence/>
             </xs:complexType>
-            <xs:complexType name="getCustomerResponse">
+            <xs:complexType name="getAllCustomersResponse">
                 <xs:sequence>
-                    <xs:element minOccurs="0" name="Customer" type="tns:customer"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Customers" type="tns:customer"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="customer">
@@ -30,15 +32,55 @@
                     <xs:element minOccurs="0" name="balance" type="xs:long"/>
                 </xs:sequence>
             </xs:complexType>
+            <xs:complexType name="addCustomer">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="Customer" type="tns:customer"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="addCustomerResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="Customer" type="tns:customer"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getCustomer">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="CustomerId" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getCustomerResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="Customer" type="tns:customer"/>
+                </xs:sequence>
+            </xs:complexType>
         </xs:schema>
     </wsdl:types>
+    <wsdl:message name="getAllCustomers">
+        <wsdl:part element="tns:getAllCustomers" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getAllCustomersResponse">
+        <wsdl:part element="tns:getAllCustomersResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="addCustomer">
+        <wsdl:part element="tns:addCustomer" name="parameters"> </wsdl:part>
+    </wsdl:message>
     <wsdl:message name="getCustomerResponse">
         <wsdl:part element="tns:getCustomerResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="addCustomerResponse">
+        <wsdl:part element="tns:addCustomerResponse" name="parameters"> </wsdl:part>
     </wsdl:message>
     <wsdl:message name="getCustomer">
         <wsdl:part element="tns:getCustomer" name="parameters"> </wsdl:part>
     </wsdl:message>
     <wsdl:portType name="CustomerService">
+        <wsdl:operation name="getAllCustomers">
+            <wsdl:input message="tns:getAllCustomers" name="getAllCustomers"> </wsdl:input>
+            <wsdl:output message="tns:getAllCustomersResponse" name="getAllCustomersResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addCustomer">
+            <wsdl:input message="tns:addCustomer" name="addCustomer"> </wsdl:input>
+            <wsdl:output message="tns:addCustomerResponse" name="addCustomerResponse"> </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="getCustomer">
             <wsdl:input message="tns:getCustomer" name="getCustomer"> </wsdl:input>
             <wsdl:output message="tns:getCustomerResponse" name="getCustomerResponse"> </wsdl:output>
@@ -46,6 +88,24 @@
     </wsdl:portType>
     <wsdl:binding name="CustomerServiceImplServiceSoapBinding" type="tns:CustomerService">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getAllCustomers">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getAllCustomers">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getAllCustomersResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="addCustomer">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="addCustomer">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="addCustomerResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="getCustomer">
             <soap:operation soapAction="" style="document"/>
             <wsdl:input name="getCustomer">

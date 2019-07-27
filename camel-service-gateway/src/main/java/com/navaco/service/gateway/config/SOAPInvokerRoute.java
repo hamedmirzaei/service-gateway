@@ -1,5 +1,6 @@
 package com.navaco.service.gateway.config;
 
+import com.navaco.service.gateway.service.Customer;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.cxf.common.message.CxfConstants;
 import org.apache.camel.model.dataformat.JsonLibrary;
@@ -19,6 +20,8 @@ public class SOAPInvokerRoute extends RouteBuilder {
         String operationName1 = "sayHello";
         String operationName2 = "sayBye";
         String operationName3 = "getCustomer";
+        String operationName4 = "addCustomer";
+        String operationName5 = "getAllCustomers";
         String namespace = "http://service.gateway.service.navaco.com/";
         String serviceURL = "http://localhost:8094/services/GreetingService";
         String serviceURL2 = "http://localhost:8094/services/CustomerService";
@@ -44,11 +47,25 @@ public class SOAPInvokerRoute extends RouteBuilder {
             .marshal().json(JsonLibrary.Jackson);
 
         from("spark-rest:get:/soap/customers/:id")
-                .setBody(simple("${header.id}"))
-                .setHeader(CxfConstants.OPERATION_NAME, simple(operationName3))
-                .setHeader(CxfConstants.OPERATION_NAMESPACE, simple(namespace))
-                .toD("cxf://" + serviceURL2 + "?serviceClass=" + serviceClass2 + "&wsdlURL=" + serviceWSDL2)
-                .marshal().json(JsonLibrary.Jackson);
+            .setBody(simple("${header.id}"))
+            .setHeader(CxfConstants.OPERATION_NAME, simple(operationName3))
+            .setHeader(CxfConstants.OPERATION_NAMESPACE, simple(namespace))
+            .toD("cxf://" + serviceURL2 + "?serviceClass=" + serviceClass2 + "&wsdlURL=" + serviceWSDL2)
+            .marshal().json(JsonLibrary.Jackson);
+
+        from("spark-rest:get:/soap/customers")
+             .transform().body(o -> new Object[0])
+            .setHeader(CxfConstants.OPERATION_NAME, simple(operationName5))
+            .setHeader(CxfConstants.OPERATION_NAMESPACE, simple(namespace))
+            .toD("cxf://" + serviceURL2 + "?serviceClass=" + serviceClass2 + "&wsdlURL=" + serviceWSDL2)
+            .marshal().json(JsonLibrary.Jackson);
+
+        from("spark-rest:post:/soap/customers")
+            .unmarshal().json(JsonLibrary.Jackson, Customer.class)
+            .setHeader(CxfConstants.OPERATION_NAME, simple(operationName4))
+            .setHeader(CxfConstants.OPERATION_NAMESPACE, simple(namespace))
+            .toD("cxf://" + serviceURL2 + "?serviceClass=" + serviceClass2 + "&wsdlURL=" + serviceWSDL2)
+            .marshal().json(JsonLibrary.Jackson);
     }
 
     private void setupRestConfiguration() {

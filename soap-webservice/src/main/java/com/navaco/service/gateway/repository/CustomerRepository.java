@@ -33,4 +33,12 @@ public class CustomerRepository {
         return new Customer(0l, "Unknown", null);
     }
 
+    public Customer addCustomer(Customer customer) {
+        customers.add(customer);
+        return customer;
+    }
+
+    public List<Customer> getAllCustomers() {
+        return customers;
+    }
 }
