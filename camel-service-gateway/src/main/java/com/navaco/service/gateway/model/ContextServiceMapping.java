@@ -1,22 +1,47 @@
 package com.navaco.service.gateway.model;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "CONTEXT_SERVICE_MAPPING")
+@EntityListeners(AuditingEntityListener.class)
 public class ContextServiceMapping implements Serializable {
 
     @Id
-    @Column(name = "CSM_ID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ctx_svc_generator")
+    @SequenceGenerator(name="ctx_svc_generator", sequenceName = "CONTEXT_SERVICE_MAPPING_SEQ", initialValue = 1)
     private Long id;
 
-    @Column(name = "CONTEXT", unique = true, nullable = false)
+    @Column(name = "CONTEXT_PATH", unique = true, nullable = false)
     private String context;
 
-    @Column(name = "SERVICE", nullable = false)
+    @Column(name = "EUREKA_SERVICE_NAME", nullable = false)
     private String service;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "SERVICE_STATUS.ID")
+    private ServiceStatus serviceStatus;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "SUB_SYSTEM_CATEGORY.ID")
+    private SubSystemCategory subSystemCategory;
+
+    @Column(nullable = false, updatable = false, name = "CREATED_AT")
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    private Date createdAt;
+
+    @Column(nullable = false, name = "UPDATED_AT")
+    @Temporal(TemporalType.TIMESTAMP)
+    @LastModifiedDate
+    private Date updatedAt;
 
     public ContextServiceMapping() {
     }
@@ -30,6 +55,13 @@ public class ContextServiceMapping implements Serializable {
         this.id = id;
         this.context = context;
         this.service = service;
+    }
+
+    public ContextServiceMapping(String context, String service, ServiceStatus serviceStatus, SubSystemCategory subSystemCategory) {
+        this.context = context;
+        this.service = service;
+        this.serviceStatus = serviceStatus;
+        this.subSystemCategory = subSystemCategory;
     }
 
     public Long getId() {
@@ -56,12 +88,32 @@ public class ContextServiceMapping implements Serializable {
         this.service = service;
     }
 
+    public ServiceStatus getServiceStatus() {
+        return serviceStatus;
+    }
+
+    public void setServiceStatus(ServiceStatus serviceStatus) {
+        this.serviceStatus = serviceStatus;
+    }
+
+    public SubSystemCategory getSubSystemCategory() {
+        return subSystemCategory;
+    }
+
+    public void setSubSystemCategory(SubSystemCategory subSystemCategory) {
+        this.subSystemCategory = subSystemCategory;
+    }
+
     @Override
     public String toString() {
         return "ContextServiceMapping{" +
                 "id=" + id +
                 ", context='" + context + '\'' +
                 ", service='" + service + '\'' +
+                ", serviceStatus=" + serviceStatus +
+                ", subSystemCategory=" + subSystemCategory +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 }
