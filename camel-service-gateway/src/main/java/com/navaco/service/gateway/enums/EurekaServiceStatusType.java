@@ -1,13 +1,13 @@
 package com.navaco.service.gateway.enums;
 
-public enum ServiceStatusType {
+public enum EurekaServiceStatusType {
     PUBLISHED("PUBLISHED"),
     TESTED("TESTED"),
     INACTIVE("INACTIVE");
 
     private String statusName;
 
-    private ServiceStatusType(String statusName) {
+    private EurekaServiceStatusType(String statusName) {
         this.statusName = statusName;
     }
 

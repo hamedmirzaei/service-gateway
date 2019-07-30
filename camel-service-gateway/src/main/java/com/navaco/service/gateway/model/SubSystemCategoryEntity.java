@@ -7,8 +7,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = SubSystemCategory.SUB_SYSTEM_CATEGORY_TABLE_NAME)
-public class SubSystemCategory {
+@Table(name = SubSystemCategoryEntity.SUB_SYSTEM_CATEGORY_TABLE_NAME)
+public class SubSystemCategoryEntity {
 
     public static final String SUB_SYSTEM_CATEGORY_TABLE_NAME = "SUB_SYSTEM_CATEGORY";
     public static final String SUB_SYSTEM_CATEGORY_SEQUENCE_NAME = SUB_SYSTEM_CATEGORY_TABLE_NAME + "_SEQ";
@@ -16,26 +16,26 @@ public class SubSystemCategory {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cat_generator")
-    @SequenceGenerator(name="cat_generator", sequenceName = SubSystemCategory.SUB_SYSTEM_CATEGORY_SEQUENCE_NAME)
+    @SequenceGenerator(name="cat_generator", sequenceName = SubSystemCategoryEntity.SUB_SYSTEM_CATEGORY_SEQUENCE_NAME)
     private Long id;
 
     @Column(name = "CATEGORY_TYPE", unique = true, nullable = false)
     private SubSystemCategoryType subSystemCategoryType;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "subSystemCategory")
-    private List<ContextServiceMapping> contextServiceMappingList;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "subSystemCategoryEntity")
+    private List<ContextPathEurekaServiceMappingEntity> contextPathEurekaServiceMappingEntityList;
 
-    public SubSystemCategory() {
+    public SubSystemCategoryEntity() {
     }
 
-    public SubSystemCategory(SubSystemCategoryType subSystemCategoryType) {
+    public SubSystemCategoryEntity(SubSystemCategoryType subSystemCategoryType) {
         this.subSystemCategoryType = subSystemCategoryType;
     }
 
-    public SubSystemCategory(SubSystemCategoryType subSystemCategoryType, List<ContextServiceMapping> contextServiceMappingList) {
+    public SubSystemCategoryEntity(SubSystemCategoryType subSystemCategoryType, List<ContextPathEurekaServiceMappingEntity> contextPathEurekaServiceMappingEntityList) {
         this.subSystemCategoryType = subSystemCategoryType;
-        this.contextServiceMappingList = contextServiceMappingList;
+        this.contextPathEurekaServiceMappingEntityList = contextPathEurekaServiceMappingEntityList;
     }
 
     public Long getId() {
@@ -54,12 +54,12 @@ public class SubSystemCategory {
         this.subSystemCategoryType = subSystemCategoryType;
     }
 
-    public List<ContextServiceMapping> getContextServiceMappingList() {
-        return contextServiceMappingList;
+    public List<ContextPathEurekaServiceMappingEntity> getContextPathEurekaServiceMappingEntityList() {
+        return contextPathEurekaServiceMappingEntityList;
     }
 
-    public void setContextServiceMappingList(List<ContextServiceMapping> contextServiceMappingList) {
-        this.contextServiceMappingList = contextServiceMappingList;
+    public void setContextPathEurekaServiceMappingEntityList(List<ContextPathEurekaServiceMappingEntity> contextPathEurekaServiceMappingEntityList) {
+        this.contextPathEurekaServiceMappingEntityList = contextPathEurekaServiceMappingEntityList;
     }
 
     @Override

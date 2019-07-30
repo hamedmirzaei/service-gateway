@@ -1,7 +1,7 @@
 package com.navaco.service.gateway.config.routebuilder;
 
 import com.navaco.service.gateway.config.RequestDispatcher;
-import com.navaco.service.gateway.service.ContextServiceMappingService;
+import com.navaco.service.gateway.service.ContextPathEurekaServiceMappingService;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
@@ -15,12 +15,12 @@ public class SetupRouteBuilder extends RouteBuilder {
     @Value("${rest.port}")
     private String port;
 
-    private ContextServiceMappingService contextServiceMappingService;
+    private ContextPathEurekaServiceMappingService contextPathEurekaServiceMappingService;
     private CamelContext camelContext;
 
     @Autowired
-    public SetupRouteBuilder(ContextServiceMappingService contextServiceMappingService, CamelContext camelContext) {
-        this.contextServiceMappingService = contextServiceMappingService;
+    public SetupRouteBuilder(ContextPathEurekaServiceMappingService contextPathEurekaServiceMappingService, CamelContext camelContext) {
+        this.contextPathEurekaServiceMappingService = contextPathEurekaServiceMappingService;
         this.camelContext = camelContext;
     }
 
@@ -29,7 +29,7 @@ public class SetupRouteBuilder extends RouteBuilder {
         // set up configuration for rest
         setupRestConfiguration();
         // add routes to camel context
-        RequestDispatcher.setup(contextServiceMappingService, camelContext);
+        RequestDispatcher.setup(contextPathEurekaServiceMappingService, camelContext);
     }
 
     /**
