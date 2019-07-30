@@ -16,7 +16,7 @@ public class ContextServiceMapping implements Serializable {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ctx_svc_generator")
-    @SequenceGenerator(name="ctx_svc_generator", sequenceName = "CONTEXT_SERVICE_MAPPING_SEQ", initialValue = 1)
+    @SequenceGenerator(name="ctx_svc_generator", sequenceName = "CONTEXT_SERVICE_MAPPING_SEQ")
     private Long id;
 
     @Column(name = "CONTEXT_PATH", unique = true, nullable = false)

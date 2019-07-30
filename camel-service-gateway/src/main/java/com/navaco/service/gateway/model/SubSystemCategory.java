@@ -12,11 +12,11 @@ public class SubSystemCategory {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cat_generator")
-    @SequenceGenerator(name="cat_generator", sequenceName = "SUB_SYSTEM_CATEGORY_SEQ", initialValue = 1)
+    @SequenceGenerator(name="cat_generator", sequenceName = "SUB_SYSTEM_CATEGORY_SEQ")
     private Long id;
 
     @Column(name = "CATEGORY_NAME", unique = true, nullable = false)
-    @Enumerated(EnumType.STRING)
+    //@Enumerated(EnumType.STRING)
     private SubSystemCategoryEnum categoryName;
 
     @OneToMany(mappedBy = "subSystemCategory")

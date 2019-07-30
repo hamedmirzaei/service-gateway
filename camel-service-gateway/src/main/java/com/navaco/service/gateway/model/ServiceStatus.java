@@ -12,11 +12,11 @@ public class ServiceStatus {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "svc_generator")
-    @SequenceGenerator(name="svc_generator", sequenceName = "SERVICE_STATUS_SEQ", initialValue = 1)
+    @SequenceGenerator(name="svc_generator", sequenceName = "SERVICE_STATUS_SEQ")
     private Long id;
 
     @Column(name = "STATUS_NAME", unique = true, nullable = false)
-    @Enumerated(EnumType.STRING)
+    //@Enumerated(EnumType.STRING)
     private ServiceStatusEnum statusName;
 
     @OneToMany(mappedBy = "serviceStatus")
