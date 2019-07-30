@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SubSystemCategoryRepository extends JpaRepository<SubSystemCategory, Long> {
-    public SubSystemCategory findByCategoryName(SubSystemCategoryType subSystemCategory);
+    public SubSystemCategory findBySubSystemCategoryType(SubSystemCategoryType subSystemCategoryType);
 }

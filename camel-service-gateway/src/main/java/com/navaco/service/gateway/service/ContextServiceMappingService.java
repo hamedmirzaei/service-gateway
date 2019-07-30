@@ -29,9 +29,9 @@ public class ContextServiceMappingService {
         return contextServiceMappingRepository.findAll();
     }
 
-    public List<ContextServiceMapping> getAllActiveContextServiceMapping() {
+    public List<ContextServiceMapping> getAllContextServiceMappingByServiceStatusType(ServiceStatusType serviceStatusType) {
         return contextServiceMappingRepository.findByServiceStatus(
-                serviceStatusService.getServiceStatusByStatusName(ServiceStatusType.PUBLISHED));
+                serviceStatusService.getServiceStatusByServiceStatusType(serviceStatusType));
     }
 
     public ContextServiceMapping addContextServiceMapping(ContextServiceMapping contextServiceMapping) {

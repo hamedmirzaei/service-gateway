@@ -7,18 +7,20 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "SUB_SYSTEM_CATEGORY")
+@Table(name = SubSystemCategory.SUB_SYSTEM_CATEGORY_TABLE_NAME)
 public class SubSystemCategory {
+
+    public static final String SUB_SYSTEM_CATEGORY_TABLE_NAME = "SUB_SYSTEM_CATEGORY";
+    public static final String SUB_SYSTEM_CATEGORY_SEQUENCE_NAME = SUB_SYSTEM_CATEGORY_TABLE_NAME + "_SEQ";
 
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cat_generator")
-    @SequenceGenerator(name="cat_generator", sequenceName = "SUB_SYSTEM_CATEGORY_SEQ")
+    @SequenceGenerator(name="cat_generator", sequenceName = SubSystemCategory.SUB_SYSTEM_CATEGORY_SEQUENCE_NAME)
     private Long id;
 
-    @Column(name = "CATEGORY_NAME", unique = true, nullable = false)
-    //@Enumerated(EnumType.STRING)
-    private SubSystemCategoryType categoryName;
+    @Column(name = "CATEGORY_TYPE", unique = true, nullable = false)
+    private SubSystemCategoryType subSystemCategoryType;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "subSystemCategory")
@@ -27,12 +29,12 @@ public class SubSystemCategory {
     public SubSystemCategory() {
     }
 
-    public SubSystemCategory(SubSystemCategoryType categoryName) {
-        this.categoryName = categoryName;
+    public SubSystemCategory(SubSystemCategoryType subSystemCategoryType) {
+        this.subSystemCategoryType = subSystemCategoryType;
     }
 
-    public SubSystemCategory(SubSystemCategoryType categoryName, List<ContextServiceMapping> contextServiceMappingList) {
-        this.categoryName = categoryName;
+    public SubSystemCategory(SubSystemCategoryType subSystemCategoryType, List<ContextServiceMapping> contextServiceMappingList) {
+        this.subSystemCategoryType = subSystemCategoryType;
         this.contextServiceMappingList = contextServiceMappingList;
     }
 
@@ -44,12 +46,12 @@ public class SubSystemCategory {
         this.id = id;
     }
 
-    public SubSystemCategoryType getCategoryName() {
-        return categoryName;
+    public SubSystemCategoryType getSubSystemCategoryType() {
+        return subSystemCategoryType;
     }
 
-    public void setCategoryName(SubSystemCategoryType categoryName) {
-        this.categoryName = categoryName;
+    public void setSubSystemCategoryType(SubSystemCategoryType subSystemCategoryType) {
+        this.subSystemCategoryType = subSystemCategoryType;
     }
 
     public List<ContextServiceMapping> getContextServiceMappingList() {
@@ -64,7 +66,7 @@ public class SubSystemCategory {
     public String toString() {
         return "SubSystemCategoryType{" +
                 "id=" + id +
-                ", categoryName='" + categoryName + '\'' +
+                ", subSystemCategoryType='" + subSystemCategoryType + '\'' +
                 '}';
     }
 

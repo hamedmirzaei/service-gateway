@@ -7,18 +7,20 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "SERVICE_STATUS")
+@Table(name = ServiceStatus.SERVICE_STATUS_TABLE_NAME)
 public class ServiceStatus {
+
+    public static final String SERVICE_STATUS_TABLE_NAME = "SERVICE_STATUS";
+    public static final String SERVICE_STATUS_SEQUENCE_NAME = SERVICE_STATUS_TABLE_NAME + "_SEQ";
 
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "svc_generator")
-    @SequenceGenerator(name="svc_generator", sequenceName = "SERVICE_STATUS_SEQ")
+    @SequenceGenerator(name="svc_generator", sequenceName = ServiceStatus.SERVICE_STATUS_SEQUENCE_NAME)
     private Long id;
 
-    @Column(name = "STATUS_NAME", unique = true, nullable = false)
-    //@Enumerated(EnumType.STRING)
-    private ServiceStatusType statusName;
+    @Column(name = "STATUS_TYPE", unique = true, nullable = false)
+    private ServiceStatusType serviceStatusType;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "serviceStatus")
@@ -27,12 +29,12 @@ public class ServiceStatus {
     public ServiceStatus() {
     }
 
-    public ServiceStatus(ServiceStatusType statusName) {
-        this.statusName = statusName;
+    public ServiceStatus(ServiceStatusType serviceStatusType) {
+        this.serviceStatusType = serviceStatusType;
     }
 
-    public ServiceStatus(ServiceStatusType statusName, List<ContextServiceMapping> contextServiceMappingList) {
-        this.statusName = statusName;
+    public ServiceStatus(ServiceStatusType serviceStatusType, List<ContextServiceMapping> contextServiceMappingList) {
+        this.serviceStatusType = serviceStatusType;
         this.contextServiceMappingList = contextServiceMappingList;
     }
 
@@ -44,12 +46,12 @@ public class ServiceStatus {
         this.id = id;
     }
 
-    public ServiceStatusType getStatusName() {
-        return statusName;
+    public ServiceStatusType getServiceStatusType() {
+        return serviceStatusType;
     }
 
-    public void setStatusName(ServiceStatusType statusName) {
-        this.statusName = statusName;
+    public void setServiceStatusType(ServiceStatusType serviceStatusType) {
+        this.serviceStatusType = serviceStatusType;
     }
 
     public List<ContextServiceMapping> getContextServiceMappingList() {
@@ -64,7 +66,7 @@ public class ServiceStatus {
     public String toString() {
         return "ServiceStatusType{" +
                 "id=" + id +
-                ", statusName='" + statusName + '\'' +
+                ", serviceStatusType='" + serviceStatusType + '\'' +
                 '}';
     }
 }

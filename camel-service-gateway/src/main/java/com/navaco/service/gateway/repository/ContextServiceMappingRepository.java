@@ -9,6 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ContextServiceMappingRepository extends JpaRepository<ContextServiceMapping, Long> {
-
     public List<ContextServiceMapping> findByServiceStatus(ServiceStatus serviceStatus);
 }

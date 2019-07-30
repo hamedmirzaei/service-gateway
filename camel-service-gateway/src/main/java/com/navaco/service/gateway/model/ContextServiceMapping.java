@@ -10,14 +10,17 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "CONTEXT_SERVICE_MAPPING")
+@Table(name = ContextServiceMapping.CONTEXT_SERVICE_MAPPING_TABLE_NAME)
 @EntityListeners(AuditingEntityListener.class)
 public class ContextServiceMapping implements Serializable {
+
+    public static final String CONTEXT_SERVICE_MAPPING_TABLE_NAME = "CONTEXT_SERVICE_MAPPING";
+    public static final String CONTEXT_SERVICE_MAPPING_SEQUENCE_NAME = CONTEXT_SERVICE_MAPPING_TABLE_NAME + "_SEQ";
 
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ctx_svc_generator")
-    @SequenceGenerator(name="ctx_svc_generator", sequenceName = "CONTEXT_SERVICE_MAPPING_SEQ")
+    @SequenceGenerator(name="ctx_svc_generator", sequenceName = ContextServiceMapping.CONTEXT_SERVICE_MAPPING_SEQUENCE_NAME)
     private Long id;
 
     @Column(name = "CONTEXT_PATH", unique = true, nullable = false)

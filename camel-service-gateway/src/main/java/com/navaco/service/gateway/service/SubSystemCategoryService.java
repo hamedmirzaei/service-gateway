@@ -16,7 +16,7 @@ public class SubSystemCategoryService {
         this.subSystemCategoryRepository = subSystemCategoryRepository;
     }
 
-    public SubSystemCategory getSubSystemCategoryByCategoryName(SubSystemCategoryType categoryName) {
-        return subSystemCategoryRepository.findByCategoryName(categoryName);
+    public SubSystemCategory getSubSystemCategoryBySubSystemCategoryType(SubSystemCategoryType subSystemCategoryType) {
+        return subSystemCategoryRepository.findBySubSystemCategoryType(subSystemCategoryType);
     }
 }

@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ServiceStatusRepository extends JpaRepository<ServiceStatus, Long> {
-    public ServiceStatus findByStatusName(ServiceStatusType serviceStatus);
+    public ServiceStatus findByServiceStatusType(ServiceStatusType serviceStatusType);
 }

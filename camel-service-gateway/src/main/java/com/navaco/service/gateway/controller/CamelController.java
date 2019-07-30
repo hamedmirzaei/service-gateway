@@ -46,7 +46,7 @@ public class CamelController {
         contextServiceMapping.setServiceStatus(new ServiceStatus(ServiceStatusType.PUBLISHED));
         contextServiceMapping.setSubSystemCategory(new SubSystemCategory(SubSystemCategoryType.ARZI));
         contextServiceMappingService.addContextServiceMapping(contextServiceMapping);*/
-        return ResponseEntity.ok(contextServiceMappingService.getAllActiveContextServiceMapping());
+        return ResponseEntity.ok(contextServiceMappingService.getAllContextServiceMappingByServiceStatusType(ServiceStatusType.PUBLISHED));
     }
 
     @GetMapping("/test2")
@@ -57,7 +57,7 @@ public class CamelController {
         contextServiceMapping.setServiceStatus(new ServiceStatus(ServiceStatusType.PUBLISHED));
         contextServiceMapping.setSubSystemCategory(new SubSystemCategory(SubSystemCategoryType.ARZI));
         contextServiceMappingService.addContextServiceMapping(contextServiceMapping);*/
-        return ResponseEntity.ok(serviceStatusService.getServiceStatusByStatusName(ServiceStatusType.PUBLISHED));
+        return ResponseEntity.ok(serviceStatusService.getServiceStatusByServiceStatusType(ServiceStatusType.PUBLISHED));
     }
 
 

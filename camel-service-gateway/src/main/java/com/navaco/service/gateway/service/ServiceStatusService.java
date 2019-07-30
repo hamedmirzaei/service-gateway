@@ -16,7 +16,7 @@ public class ServiceStatusService {
         this.serviceStatusRepository = serviceStatusRepository;
     }
 
-    public ServiceStatus getServiceStatusByStatusName(ServiceStatusType statusName) {
-        return serviceStatusRepository.findByStatusName(statusName);
+    public ServiceStatus getServiceStatusByServiceStatusType(ServiceStatusType serviceStatusType) {
+        return serviceStatusRepository.findByServiceStatusType(serviceStatusType);
     }
 }
