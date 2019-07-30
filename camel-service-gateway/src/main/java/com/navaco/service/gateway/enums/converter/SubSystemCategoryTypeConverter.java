@@ -1,16 +1,16 @@
 package com.navaco.service.gateway.enums.converter;
 
-import com.navaco.service.gateway.enums.SubSystemCategoryEnum;
+import com.navaco.service.gateway.enums.SubSystemCategoryType;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import java.util.stream.Stream;
 
 @Converter(autoApply = true)
-public class SubSystemCategoryEnumConverter implements AttributeConverter<SubSystemCategoryEnum, String> {
+public class SubSystemCategoryTypeConverter implements AttributeConverter<SubSystemCategoryType, String> {
 
     @Override
-    public String convertToDatabaseColumn(SubSystemCategoryEnum subSystemCategoryEnum) {
+    public String convertToDatabaseColumn(SubSystemCategoryType subSystemCategoryEnum) {
         if (subSystemCategoryEnum == null) {
             return null;
         }
@@ -18,12 +18,12 @@ public class SubSystemCategoryEnumConverter implements AttributeConverter<SubSys
     }
 
     @Override
-    public SubSystemCategoryEnum convertToEntityAttribute(String categoryName) {
+    public SubSystemCategoryType convertToEntityAttribute(String categoryName) {
         if (categoryName == null) {
             return null;
         }
 
-        return Stream.of(SubSystemCategoryEnum.values())
+        return Stream.of(SubSystemCategoryType.values())
                 .filter(c -> c.getCategoryName().equals(categoryName))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);

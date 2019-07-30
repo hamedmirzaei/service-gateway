@@ -1,16 +1,16 @@
 package com.navaco.service.gateway.enums.converter;
 
-import com.navaco.service.gateway.enums.ServiceStatusEnum;
+import com.navaco.service.gateway.enums.ServiceStatusType;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import java.util.stream.Stream;
 
 @Converter(autoApply = true)
-public class ServiceStatusEnumConverter implements AttributeConverter<ServiceStatusEnum, String> {
+public class ServiceStatusTypeConverter implements AttributeConverter<ServiceStatusType, String> {
 
     @Override
-    public String convertToDatabaseColumn(ServiceStatusEnum serviceStatusEnum) {
+    public String convertToDatabaseColumn(ServiceStatusType serviceStatusEnum) {
         if (serviceStatusEnum == null) {
             return null;
         }
@@ -18,12 +18,12 @@ public class ServiceStatusEnumConverter implements AttributeConverter<ServiceSta
     }
 
     @Override
-    public ServiceStatusEnum convertToEntityAttribute(String statusName) {
+    public ServiceStatusType convertToEntityAttribute(String statusName) {
         if (statusName == null) {
             return null;
         }
 
-        return Stream.of(ServiceStatusEnum.values())
+        return Stream.of(ServiceStatusType.values())
                 .filter(s -> s.getStatusName().equals(statusName))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);

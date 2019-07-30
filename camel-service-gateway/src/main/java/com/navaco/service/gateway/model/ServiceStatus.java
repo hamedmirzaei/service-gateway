@@ -1,6 +1,7 @@
 package com.navaco.service.gateway.model;
 
-import com.navaco.service.gateway.enums.ServiceStatusEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.navaco.service.gateway.enums.ServiceStatusType;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,19 +18,20 @@ public class ServiceStatus {
 
     @Column(name = "STATUS_NAME", unique = true, nullable = false)
     //@Enumerated(EnumType.STRING)
-    private ServiceStatusEnum statusName;
+    private ServiceStatusType statusName;
 
-    @OneToMany(mappedBy = "serviceStatus")
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "serviceStatus")
     private List<ContextServiceMapping> contextServiceMappingList;
 
     public ServiceStatus() {
     }
 
-    public ServiceStatus(ServiceStatusEnum statusName) {
+    public ServiceStatus(ServiceStatusType statusName) {
         this.statusName = statusName;
     }
 
-    public ServiceStatus(ServiceStatusEnum statusName, List<ContextServiceMapping> contextServiceMappingList) {
+    public ServiceStatus(ServiceStatusType statusName, List<ContextServiceMapping> contextServiceMappingList) {
         this.statusName = statusName;
         this.contextServiceMappingList = contextServiceMappingList;
     }
@@ -42,11 +44,11 @@ public class ServiceStatus {
         this.id = id;
     }
 
-    public ServiceStatusEnum getStatusName() {
+    public ServiceStatusType getStatusName() {
         return statusName;
     }
 
-    public void setStatusName(ServiceStatusEnum statusName) {
+    public void setStatusName(ServiceStatusType statusName) {
         this.statusName = statusName;
     }
 
@@ -60,7 +62,7 @@ public class ServiceStatus {
 
     @Override
     public String toString() {
-        return "ServiceStatusEnum{" +
+        return "ServiceStatusType{" +
                 "id=" + id +
                 ", statusName='" + statusName + '\'' +
                 '}';

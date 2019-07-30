@@ -1,5 +1,6 @@
 package com.navaco.service.gateway.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -25,10 +26,12 @@ public class ContextServiceMapping implements Serializable {
     @Column(name = "EUREKA_SERVICE_NAME", nullable = false)
     private String service;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SERVICE_STATUS.ID")
     private ServiceStatus serviceStatus;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SUB_SYSTEM_CATEGORY.ID")
     private SubSystemCategory subSystemCategory;

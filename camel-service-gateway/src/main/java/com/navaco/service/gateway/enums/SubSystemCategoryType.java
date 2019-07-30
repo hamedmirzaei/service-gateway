@@ -1,12 +1,12 @@
 package com.navaco.service.gateway.enums;
 
-public enum SubSystemCategoryEnum {
+public enum SubSystemCategoryType {
     ARZI("ARZI"),
     CHANNEL_MANAGER("CHANNEL_MANAGER");
 
     private String categoryName;
 
-    private SubSystemCategoryEnum(String categoryName) {
+    private SubSystemCategoryType(String categoryName) {
         this.categoryName = categoryName;
     }
 

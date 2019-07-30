@@ -1,6 +1,7 @@
 package com.navaco.service.gateway.model;
 
-import com.navaco.service.gateway.enums.SubSystemCategoryEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.navaco.service.gateway.enums.SubSystemCategoryType;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,19 +18,20 @@ public class SubSystemCategory {
 
     @Column(name = "CATEGORY_NAME", unique = true, nullable = false)
     //@Enumerated(EnumType.STRING)
-    private SubSystemCategoryEnum categoryName;
+    private SubSystemCategoryType categoryName;
 
-    @OneToMany(mappedBy = "subSystemCategory")
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "subSystemCategory")
     private List<ContextServiceMapping> contextServiceMappingList;
 
     public SubSystemCategory() {
     }
 
-    public SubSystemCategory(SubSystemCategoryEnum categoryName) {
+    public SubSystemCategory(SubSystemCategoryType categoryName) {
         this.categoryName = categoryName;
     }
 
-    public SubSystemCategory(SubSystemCategoryEnum categoryName, List<ContextServiceMapping> contextServiceMappingList) {
+    public SubSystemCategory(SubSystemCategoryType categoryName, List<ContextServiceMapping> contextServiceMappingList) {
         this.categoryName = categoryName;
         this.contextServiceMappingList = contextServiceMappingList;
     }
@@ -42,11 +44,11 @@ public class SubSystemCategory {
         this.id = id;
     }
 
-    public SubSystemCategoryEnum getCategoryName() {
+    public SubSystemCategoryType getCategoryName() {
         return categoryName;
     }
 
-    public void setCategoryName(SubSystemCategoryEnum categoryName) {
+    public void setCategoryName(SubSystemCategoryType categoryName) {
         this.categoryName = categoryName;
     }
 
@@ -60,7 +62,7 @@ public class SubSystemCategory {
 
     @Override
     public String toString() {
-        return "SubSystemCategoryEnum{" +
+        return "SubSystemCategoryType{" +
                 "id=" + id +
                 ", categoryName='" + categoryName + '\'' +
                 '}';
