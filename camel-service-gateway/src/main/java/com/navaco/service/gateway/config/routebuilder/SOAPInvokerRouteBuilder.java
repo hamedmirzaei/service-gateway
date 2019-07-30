@@ -1,4 +1,4 @@
-package com.navaco.service.gateway.config;
+package com.navaco.service.gateway.config.routebuilder;
 
 import com.navaco.service.gateway.service.Customer;
 import org.apache.camel.Exchange;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class SOAPInvokerRoute extends RouteBuilder {
+public class SOAPInvokerRouteBuilder extends RouteBuilder {
 
     @Value("${rest.port}")
     private String port;

@@ -1,4 +1,4 @@
-package com.navaco.service.gateway.routebuilder;
+package com.navaco.service.gateway.config.routebuilder;
 
 import com.navaco.service.gateway.config.RequestDispatcher;
 import com.navaco.service.gateway.service.ContextServiceMappingService;

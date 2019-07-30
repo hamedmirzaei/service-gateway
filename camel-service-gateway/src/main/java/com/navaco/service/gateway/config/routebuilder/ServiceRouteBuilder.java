@@ -1,4 +1,4 @@
-package com.navaco.service.gateway.routebuilder;
+package com.navaco.service.gateway.config.routebuilder;
 
 import com.navaco.service.gateway.model.ContextServiceMapping;
 import org.apache.camel.CamelContext;

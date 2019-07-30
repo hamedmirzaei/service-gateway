@@ -1,4 +1,4 @@
-package com.navaco.service.gateway.controller;
+package com.navaco.service.gateway.api;
 
 import com.navaco.service.gateway.config.RequestDispatcher;
 import com.navaco.service.gateway.enums.ServiceStatusType;
