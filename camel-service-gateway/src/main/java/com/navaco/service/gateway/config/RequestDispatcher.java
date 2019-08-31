@@ -1,7 +1,7 @@
 package com.navaco.service.gateway.config;
 
-import com.navaco.service.gateway.model.ContextPathEurekaServiceMappingEntity;
 import com.navaco.service.gateway.config.routebuilder.ServiceRouteBuilder;
+import com.navaco.service.gateway.domain.ContextPathEurekaServiceMappingEntity;
 import com.navaco.service.gateway.service.ContextPathEurekaServiceMappingService;
 import org.apache.camel.CamelContext;
 import org.apache.camel.model.RouteDefinition;
@@ -13,8 +13,9 @@ public class RequestDispatcher {
 
     /**
      * this is going to add all the routes based on 'ContextPathEurekaServiceMappingEntity' table content
+     *
      * @param contextPathEurekaServiceMappingService: the service layer og 'ContextPathEurekaServiceMappingEntity' model class
-     * @param camelContext: the 'CamelContext' class
+     * @param camelContext:                           the 'CamelContext' class
      */
     public static void setup(ContextPathEurekaServiceMappingService contextPathEurekaServiceMappingService, CamelContext camelContext) {
         // mapping of context strings to eureka service names
@@ -34,8 +35,9 @@ public class RequestDispatcher {
      * this is going to remove all the previous routes start with '/services'
      * and add them based on 'ContextPathEurekaServiceMappingEntity' table content again. So, it will be updated without
      * restarting the application and by just calling Http.GET to '/refresh' API
+     *
      * @param contextPathEurekaServiceMappingService: the service layer og 'ContextPathEurekaServiceMappingEntity' model class
-     * @param camelContext: the 'CamelContext' class
+     * @param camelContext:                           the 'CamelContext' class
      */
     public static void refresh(ContextPathEurekaServiceMappingService contextPathEurekaServiceMappingService, CamelContext camelContext) {
         // removing the routes

@@ -27,6 +27,7 @@
         <module>config-server</module>
         <module>eureka-server</module>
         <module>soap-webservice</module>
+        <module>sinap-webservice</module>
     </modules>
 
     <dependencies>

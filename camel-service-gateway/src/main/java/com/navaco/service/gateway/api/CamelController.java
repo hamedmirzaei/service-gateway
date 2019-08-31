@@ -1,9 +1,9 @@
 package com.navaco.service.gateway.api;
 
 import com.navaco.service.gateway.config.RequestDispatcher;
+import com.navaco.service.gateway.domain.ContextPathEurekaServiceMappingEntity;
+import com.navaco.service.gateway.domain.EurekaServiceStatusEntity;
 import com.navaco.service.gateway.enums.EurekaServiceStatusType;
-import com.navaco.service.gateway.model.ContextPathEurekaServiceMappingEntity;
-import com.navaco.service.gateway.model.EurekaServiceStatusEntity;
 import com.navaco.service.gateway.service.ContextPathEurekaServiceMappingService;
 import com.navaco.service.gateway.service.EurekaServiceStatusService;
 import org.apache.camel.CamelContext;

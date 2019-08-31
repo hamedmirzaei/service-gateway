@@ -1,6 +1,6 @@
 package com.navaco.service.gateway.config.routebuilder;
 
-import com.navaco.service.gateway.model.ContextPathEurekaServiceMappingEntity;
+import com.navaco.service.gateway.domain.ContextPathEurekaServiceMappingEntity;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;

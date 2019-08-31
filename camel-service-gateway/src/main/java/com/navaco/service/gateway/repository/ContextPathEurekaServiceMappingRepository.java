@@ -1,7 +1,7 @@
 package com.navaco.service.gateway.repository;
 
-import com.navaco.service.gateway.model.ContextPathEurekaServiceMappingEntity;
-import com.navaco.service.gateway.model.EurekaServiceStatusEntity;
+import com.navaco.service.gateway.domain.ContextPathEurekaServiceMappingEntity;
+import com.navaco.service.gateway.domain.EurekaServiceStatusEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

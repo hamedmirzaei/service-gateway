@@ -1,4 +1,4 @@
-package com.navaco.service.gateway.model;
+package com.navaco.service.gateway.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.navaco.service.gateway.enums.SubSystemCategoryType;

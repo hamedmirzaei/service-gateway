@@ -1,7 +1,7 @@
 package com.navaco.service.gateway.service;
 
+import com.navaco.service.gateway.domain.ContextPathEurekaServiceMappingEntity;
 import com.navaco.service.gateway.enums.EurekaServiceStatusType;
-import com.navaco.service.gateway.model.ContextPathEurekaServiceMappingEntity;
 import com.navaco.service.gateway.repository.ContextPathEurekaServiceMappingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

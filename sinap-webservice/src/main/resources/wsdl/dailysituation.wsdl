@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="DailySituationService" targetNamespace="http://tempuri.org/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy"
+                  xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/"
+                  xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+                  xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+                  xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                  xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <!--<wsp:Policy wsu:Id="BasicHttpBinding_IDailySituationService_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:TransportToken>
+                            <wsp:Policy>
+                                <sp:HttpsToken RequireClientCertificate="false"/>
+                            </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic256/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Strict/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                    </wsp:Policy>
+                </sp:TransportBinding>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>-->
+    <wsdl:types>
+        <xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/"
+                   xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:import namespace="http://schemas.datacontract.org/2004/07/DailySituationServiceLibrary.Model"/>
+            <xs:element name="Insert">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="dailySituation" nillable="true" type="q1:DailySituation"
+                                    xmlns:q1="http://schemas.datacontract.org/2004/07/DailySituationServiceLibrary.Model"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="InsertResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="InsertResult" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified"
+                   targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/"
+                   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/">
+            <xs:element name="anyType" nillable="true" type="xs:anyType"/>
+            <xs:element name="anyURI" nillable="true" type="xs:anyURI"/>
+            <xs:element name="base64Binary" nillable="true" type="xs:base64Binary"/>
+            <xs:element name="boolean" nillable="true" type="xs:boolean"/>
+            <xs:element name="byte" nillable="true" type="xs:byte"/>
+            <xs:element name="dateTime" nillable="true" type="xs:dateTime"/>
+            <xs:element name="decimal" nillable="true" type="xs:decimal"/>
+            <xs:element name="double" nillable="true" type="xs:double"/>
+            <xs:element name="float" nillable="true" type="xs:float"/>
+            <xs:element name="int" nillable="true" type="xs:int"/>
+            <xs:element name="long" nillable="true" type="xs:long"/>
+            <xs:element name="QName" nillable="true" type="xs:QName"/>
+            <xs:element name="short" nillable="true" type="xs:short"/>
+            <xs:element name="string" nillable="true" type="xs:string"/>
+            <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte"/>
+            <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt"/>
+            <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong"/>
+            <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort"/>
+            <xs:element name="char" nillable="true" type="tns:char"/>
+            <xs:simpleType name="char">
+                <xs:restriction base="xs:int"/>
+            </xs:simpleType>
+            <xs:element name="duration" nillable="true" type="tns:duration"/>
+            <xs:simpleType name="duration">
+                <xs:restriction base="xs:duration">
+                    <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?"/>
+                    <xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+                    <xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="guid" nillable="true" type="tns:guid"/>
+            <xs:simpleType name="guid">
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:attribute name="FactoryType" type="xs:QName"/>
+            <xs:attribute name="Id" type="xs:ID"/>
+            <xs:attribute name="Ref" type="xs:IDREF"/>
+        </xs:schema>
+        <xs:schema elementFormDefault="qualified"
+                   targetNamespace="http://schemas.datacontract.org/2004/07/DailySituationServiceLibrary.Model"
+                   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   xmlns:tns="http://schemas.datacontract.org/2004/07/DailySituationServiceLibrary.Model">
+            <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+            <xs:complexType name="DailySituation">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="ATMBackupList" nillable="true" type="tns:ArrayOfATMBackup"/>
+                    <xs:element minOccurs="0" name="BankNoteTahtast" type="xs:long"/>
+                    <xs:element minOccurs="0" name="BranchCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="CashPayment" type="xs:long"/>
+                    <xs:element minOccurs="0" name="CashReception" type="xs:long"/>
+                    <xs:element minOccurs="0" name="CoinTahdast" type="xs:long"/>
+                    <xs:element minOccurs="0" name="DailySituationDetailsList" nillable="true"
+                                type="tns:ArrayOfDailySituationDetails"/>
+                    <xs:element minOccurs="0" name="EndSituation" type="xs:long"/>
+                    <xs:element minOccurs="0" name="FirstSituation" type="xs:long"/>
+                    <xs:element minOccurs="0" name="FunctionDate" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="MoneyDispatcher_PayList" nillable="true"
+                                type="tns:ArrayOfMoneyDispatcher_Pay"/>
+                    <xs:element minOccurs="0" name="MoneyDispatcher_ReceivesList" nillable="true"
+                                type="tns:ArrayOfMoneyDispatcher_Receive"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="DailySituation" nillable="true" type="tns:DailySituation"/>
+            <xs:complexType name="ArrayOfATMBackup">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="ATMBackup" nillable="true"
+                                type="tns:ATMBackup"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ArrayOfATMBackup" nillable="true" type="tns:ArrayOfATMBackup"/>
+            <xs:complexType name="ATMBackup">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="MoneyUnit" type="tns:MoneyUnits"/>
+                    <xs:element minOccurs="0" name="Piece" nillable="true" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ATMBackup" nillable="true" type="tns:ATMBackup"/>
+            <xs:simpleType name="MoneyUnits">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="NotDetermined"/>
+                    <xs:enumeration value="B100r">
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7
+                                </EnumerationValue>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="B200r">
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8
+                                </EnumerationValue>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="B500r">
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">9
+                                </EnumerationValue>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="B1Kr">
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10
+                                </EnumerationValue>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="B2Kr">
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">11
+                                </EnumerationValue>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="B5Kr">
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">12
+                                </EnumerationValue>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="B10Kr">
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">13
+                                </EnumerationValue>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="B20Kr">
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">14
+                                </EnumerationValue>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="B50Kr">
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">15
+                                </EnumerationValue>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="B100Kr">
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16
+                                </EnumerationValue>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="B500Kr">
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">17
+                                </EnumerationValue>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="B1Mr">
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">18
+                                </EnumerationValue>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="CoinSum">
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">19
+                                </EnumerationValue>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="MoneyUnits" nillable="true" type="tns:MoneyUnits"/>
+            <xs:complexType name="ArrayOfDailySituationDetails">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="DailySituationDetails" nillable="true"
+                                type="tns:DailySituationDetails"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ArrayOfDailySituationDetails" nillable="true" type="tns:ArrayOfDailySituationDetails"/>
+            <xs:complexType name="DailySituationDetails">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="Amount" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="MoneyStatus" type="tns:MoneyStatus"/>
+                    <xs:element minOccurs="0" name="MoneyUnit" type="tns:MoneyUnits"/>
+                    <xs:element minOccurs="0" name="Packet" nillable="true" type="xs:int"/>
+                    <xs:element minOccurs="0" name="Piece" nillable="true" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="DailySituationDetails" nillable="true" type="tns:DailySituationDetails"/>
+            <xs:simpleType name="MoneyStatus">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="NotDetermind"/>
+                    <xs:enumeration value="Usable"/>
+                    <xs:enumeration value="Overused"/>
+                    <xs:enumeration value="Useless"/>
+                    <xs:enumeration value="Incomplete"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="MoneyStatus" nillable="true" type="tns:MoneyStatus"/>
+            <xs:complexType name="ArrayOfMoneyDispatcher_Pay">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="MoneyDispatcher_Pay" nillable="true"
+                                type="tns:MoneyDispatcher_Pay"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ArrayOfMoneyDispatcher_Pay" nillable="true" type="tns:ArrayOfMoneyDispatcher_Pay"/>
+            <xs:complexType name="MoneyDispatcher_Pay">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="MoneyUnit" type="tns:MoneyUnits"/>
+                    <xs:element minOccurs="0" name="Piece" nillable="true" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="MoneyDispatcher_Pay" nillable="true" type="tns:MoneyDispatcher_Pay"/>
+            <xs:complexType name="ArrayOfMoneyDispatcher_Receive">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="MoneyDispatcher_Receive" nillable="true"
+                                type="tns:MoneyDispatcher_Receive"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ArrayOfMoneyDispatcher_Receive" nillable="true"
+                        type="tns:ArrayOfMoneyDispatcher_Receive"/>
+            <xs:complexType name="MoneyDispatcher_Receive">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="MoneyUnit" type="tns:MoneyUnits"/>
+                    <xs:element minOccurs="0" name="Piece" nillable="true" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="MoneyDispatcher_Receive" nillable="true" type="tns:MoneyDispatcher_Receive"/>
+        </xs:schema>
+        <xs:schema elementFormDefault="qualified"
+                   targetNamespace="http://schemas.datacontract.org/2004/07/DailySituationServiceLibrary.Exception"
+                   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   xmlns:tns="http://schemas.datacontract.org/2004/07/DailySituationServiceLibrary.Exception">
+            <xs:complexType name="SinapException">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="ErrorCode" type="xs:int"/>
+                    <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="ParamName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="ParamValue" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="RaisedTime" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="SinapException" nillable="true" type="tns:SinapException"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="IDailySituationService_Insert_InputMessage">
+        <wsdl:part name="parameters" element="tns:Insert"/>
+    </wsdl:message>
+    <wsdl:message name="IDailySituationService_Insert_OutputMessage">
+        <wsdl:part name="parameters" element="tns:InsertResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IDailySituationService_Insert_SinapExceptionFault_FaultMessage">
+        <wsdl:part name="detail" element="q1:SinapException"
+                   xmlns:q1="http://schemas.datacontract.org/2004/07/DailySituationServiceLibrary.Exception"/>
+    </wsdl:message>
+    <wsdl:portType name="IDailySituationService">
+        <wsdl:operation name="Insert">
+            <wsdl:input wsaw:Action="http://tempuri.org/IDailySituationService/Insert"
+                        message="tns:IDailySituationService_Insert_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IDailySituationService/InsertResponse"
+                         message="tns:IDailySituationService_Insert_OutputMessage"/>
+            <wsdl:fault wsaw:Action="http://tempuri.org/IDailySituationService/InsertSinapExceptionFault"
+                        name="SinapExceptionFault"
+                        message="tns:IDailySituationService_Insert_SinapExceptionFault_FaultMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BasicHttpBinding_IDailySituationService" type="tns:IDailySituationService">
+        <!--<wsp:PolicyReference URI="#BasicHttpBinding_IDailySituationService_policy"/>-->
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Insert">
+            <soap:operation soapAction="http://tempuri.org/IDailySituationService/Insert" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="SinapExceptionFault">
+                <soap:fault use="literal" name="SinapExceptionFault" namespace=""/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="DailySituationService">
+        <wsdl:port name="BasicHttpBinding_IDailySituationService" binding="tns:BasicHttpBinding_IDailySituationService">
+            <soap:address location="https://webservice.pbn.net/sinapdaily/DailySituation.svc"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

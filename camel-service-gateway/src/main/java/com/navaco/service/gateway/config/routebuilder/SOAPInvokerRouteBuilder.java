@@ -1,6 +1,6 @@
 package com.navaco.service.gateway.config.routebuilder;
 
-import com.navaco.service.gateway.service.Customer;
+import ir.navaco.core.gateway.soap.customer.Customer;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
@@ -29,7 +29,7 @@ public class SOAPInvokerRouteBuilder extends RouteBuilder {
         String operationName4 = "getAccountOfCustomer";
         String namespace = "http://service.gateway.service.navaco.com/";
         String serviceURL = "http://localhost:8094/services/CustomerService";
-        String serviceClass = "com.navaco.service.gateway.service.CustomerService";
+        String serviceClass = "ir.navaco.core.gateway.soap.customer.CustomerService";
         String serviceWSDL = "/wsdl/CustomerService.wsdl";
 
         // rest configuration
@@ -37,56 +37,56 @@ public class SOAPInvokerRouteBuilder extends RouteBuilder {
 
         // get an account of a customer
         from("spark-rest:get:/soap/customers/:id/accounts/:aid")
-            .process(new Processor() {
-                @Override
-                public void process(Exchange exchange) throws Exception {
-                    Message inMessage = exchange.getIn();
-                    String customerId = inMessage.getHeader("id", String.class);
-                    String accountId = inMessage.getHeader("aid", String.class);
-                    List<Object> params = new ArrayList<>();
-                    params.add(customerId);
-                    params.add(accountId);
-                    inMessage.setBody(params);
-                }
-            })
-            .setHeader(CxfConstants.OPERATION_NAME, simple(operationName4))
-            .setHeader(CxfConstants.OPERATION_NAMESPACE, simple(namespace))
-            .toD("cxf://" + serviceURL + "?serviceClass=" + serviceClass + "&wsdlURL=" + serviceWSDL)
-            .marshal().json(JsonLibrary.Jackson);
+                .process(new Processor() {
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        Message inMessage = exchange.getIn();
+                        String customerId = inMessage.getHeader("id", String.class);
+                        String accountId = inMessage.getHeader("aid", String.class);
+                        List<Object> params = new ArrayList<>();
+                        params.add(customerId);
+                        params.add(accountId);
+                        inMessage.setBody(params);
+                    }
+                })
+                .setHeader(CxfConstants.OPERATION_NAME, simple(operationName4))
+                .setHeader(CxfConstants.OPERATION_NAMESPACE, simple(namespace))
+                .toD("cxf://" + serviceURL + "?serviceClass=" + serviceClass + "&wsdlURL=" + serviceWSDL)
+                .marshal().json(JsonLibrary.Jackson);
 
         // get a customer
         from("spark-rest:get:/soap/customers/:id")
-            .setBody(simple("${header.id}"))
-            .setHeader(CxfConstants.OPERATION_NAME, simple(operationName1))
-            .setHeader(CxfConstants.OPERATION_NAMESPACE, simple(namespace))
-            .toD("cxf://" + serviceURL + "?serviceClass=" + serviceClass + "&wsdlURL=" + serviceWSDL)
-            .marshal().json(JsonLibrary.Jackson);
+                .setBody(simple("${header.id}"))
+                .setHeader(CxfConstants.OPERATION_NAME, simple(operationName1))
+                .setHeader(CxfConstants.OPERATION_NAMESPACE, simple(namespace))
+                .toD("cxf://" + serviceURL + "?serviceClass=" + serviceClass + "&wsdlURL=" + serviceWSDL)
+                .marshal().json(JsonLibrary.Jackson);
 
         // get all customers
         from("spark-rest:get:/soap/customers")
-            .transform().body(o -> new Object[0])
-            .setHeader(CxfConstants.OPERATION_NAME, simple(operationName2))
-            .setHeader(CxfConstants.OPERATION_NAMESPACE, simple(namespace))
-            .toD("cxf://" + serviceURL + "?serviceClass=" + serviceClass + "&wsdlURL=" + serviceWSDL)
-            .marshal().json(JsonLibrary.Jackson);
+                .transform().body(o -> new Object[0])
+                .setHeader(CxfConstants.OPERATION_NAME, simple(operationName2))
+                .setHeader(CxfConstants.OPERATION_NAMESPACE, simple(namespace))
+                .toD("cxf://" + serviceURL + "?serviceClass=" + serviceClass + "&wsdlURL=" + serviceWSDL)
+                .marshal().json(JsonLibrary.Jackson);
 
         // add a customer
         from("spark-rest:post:/soap/customers")
-            .unmarshal().json(JsonLibrary.Jackson, Customer.class)
-            .setHeader(CxfConstants.OPERATION_NAME, simple(operationName3))
-            .setHeader(CxfConstants.OPERATION_NAMESPACE, simple(namespace))
-            .toD("cxf://" + serviceURL + "?serviceClass=" + serviceClass + "&wsdlURL=" + serviceWSDL)
-            .marshal().json(JsonLibrary.Jackson);
+                .unmarshal().json(JsonLibrary.Jackson, Customer.class)
+                .setHeader(CxfConstants.OPERATION_NAME, simple(operationName3))
+                .setHeader(CxfConstants.OPERATION_NAMESPACE, simple(namespace))
+                .toD("cxf://" + serviceURL + "?serviceClass=" + serviceClass + "&wsdlURL=" + serviceWSDL)
+                .marshal().json(JsonLibrary.Jackson);
     }
 
     private void setupRestConfiguration() {
         restConfiguration()
-            .host("localhost")
-            .port(port)
-            .bindingMode(RestBindingMode.json)
-            //.componentProperty("matchOnUriPrefix", "true")
-            .apiProperty("api.title", "SOAP/REST Camel API")
-            .apiProperty("api.version", "1.0")
-            .apiProperty("cors", "true");
+                .host("localhost")
+                .port(port)
+                .bindingMode(RestBindingMode.json)
+                //.componentProperty("matchOnUriPrefix", "true")
+                .apiProperty("api.title", "SOAP/REST Camel API")
+                .apiProperty("api.version", "1.0")
+                .apiProperty("cors", "true");
     }
 }

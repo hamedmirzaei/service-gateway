@@ -132,6 +132,21 @@
                             <wsdlOptions>
                                 <wsdlOption>
                                     <wsdl>src/main/resources/wsdl/CustomerService.wsdl</wsdl>
+                                    <extraargs>
+                                        <extraarg>-p</extraarg>
+                                        <extraarg>ir.navaco.core.gateway.soap.customer</extraarg>
+                                        <!--<extraarg>-impl</extraarg>
+                                        <extraarg>-keep</extraarg>-->
+                                    </extraargs>
+                                </wsdlOption>
+                                <wsdlOption>
+                                    <wsdl>src/main/resources/wsdl/dailysituation.wsdl</wsdl>
+                                    <extraargs>
+                                        <extraarg>-p</extraarg>
+                                        <extraarg>ir.navaco.core.gateway.soap.sinap</extraarg>
+                                        <!--<extraarg>-impl</extraarg>
+                                        <extraarg>-keep</extraarg>-->
+                                    </extraargs>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>

@@ -1,4 +1,4 @@
-package com.navaco.service.gateway.model;
+package com.navaco.service.gateway.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
